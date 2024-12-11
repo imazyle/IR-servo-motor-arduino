@@ -1,0 +1,40 @@
+#include <Servo.h>
+
+const int ledRed = 2;
+const int ledGreen = 3;
+const int IR = 6; 
+
+Servo servo;
+void setup()
+{
+  Serial.begin(9600); // Init Serial at 115200 Baud Rate.
+  Serial.println("Serial Working"); // Test to check if serial is working or not
+  pinMode(IR, INPUT); // IR Sensor pin INPUT
+  pinMode(ledRed, OUTPUT);
+  pinMode(ledGreen, OUTPUT);// LED Pin Output
+  servo.attach(7);
+  servo.write(0);
+}
+
+void loop()
+{
+ 
+  if (digitalRead(IR) == LOW) // Check if the pin high or not
+  {
+    // if the pin is high turn off the onboard Led
+
+    digitalWrite(ledRed, LOW); // LED LOW
+    digitalWrite(ledGreen, HIGH);
+    Serial.println("Motion Detected!");
+    servo.write(180);
+    delay(5500); // print Motion Detected! on the serial monitor window
+  }
+  else  {
+    //else turn on the onboard LED
+      digitalWrite(ledRed, HIGH); // LED LOW
+    digitalWrite(ledGreen, LOW); 
+    Serial.println("Motion Stop!");
+    servo.write(0);
+    delay(500); // print Motion Stop! on the serial monitor window
+  }
+}
